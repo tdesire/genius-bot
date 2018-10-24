@@ -26,9 +26,9 @@ Keywords:
 
 LyricsGenius
 
-  Backend python API wrapper that uses the Genius Web API to scrap music data from the Genius.com website.
+   Backend python API wrapper that uses the Genius Web API to scrap music data from the Genius.com website.
   
-  LyricsGenius uses the following frameworks/libraries:
+   LyricsGenius uses the following frameworks/libraries:
   
   
     BeautifulSoup
@@ -41,9 +41,9 @@ LyricsGenius
     
 discord.py
 
-  Api wrapper for discord written in python. Allows the user to program discord bot/chat logs with python.
+   Api wrapper for discord written in python. Allows the user to program discord bot/chat logs with python.
   
-  Link to discord.py GitHub repo:
+   Link to discord.py GitHub repo:
   
-  https://github.com/Rapptz/discord.py
+   https://github.com/Rapptz/discord.py
  
