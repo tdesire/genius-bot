@@ -1,11 +1,12 @@
 import discord
 import lyricsgenius as genius
-api = genius.Genius('I77pPvz_lAoG8k_9DJAol0bUOWQn0Xtngc1n2ytRE-J1oTeHKJfnIlPa3pZ3vTfp')
+import config
+api = genius.Genius(config.GENIUS_TOKEN)
 from discord.ext import commands
 from discord.ext.commands import Bot
 import config
 
-TOKEN = config.TOKEN
+TOKEN = config.BOT_TOKEN
 Client = discord.Client()
 client = commands.Bot(command_prefix = '!genius')
 
@@ -44,5 +45,22 @@ async def on_message(message):
         snippet.remove(line)
       else:
         await client.send_message(message.channel, "%s" % (line))
+
+  if message.content.upper().startswith('!ALBUMFOR'):
+    args = message.content.lower().replace('!albumfor', "").split('-')
+    a = args[0]
+    s = args[1]
+    await client.send_message(message.channel, "Finding the album for  '{}'  by  '{}' ...".format(s, a))
+    album = api.search_song(s, a).album
+    await client.send_message(message.channel, "'{}'  is featured on the album  '{}'  by  '{}'".format(s, album, a))
+
+  if message.content.upper().startswith('!RELEASEDATEFOR'):
+    args = message.content.lower().replace('!releasedatefor', "").split('-')
+    a = args[0]
+    s = args[1]
+    await client.send_message(message.channel, "Finding the release date for the track  '{}'  by  '{}' ...".format(s, a))
+    release_date = api.search_song(s, a).year
+    await client.send_message(message.channel, "Release date for  '{}'  by  '{}' :  '{}'".format(s, a, release_date))
+
 
 client.run(TOKEN)
