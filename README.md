@@ -24,7 +24,8 @@ Keywords:
 
 # Tech Stack Details
 
-LyricsGenius
+LyricsGenius:
+
 
    Backend python API wrapper that uses the Genius Web API to scrap music data from the Genius.com website.
   
@@ -39,7 +40,8 @@ LyricsGenius
   
   https://github.com/johnwmillr/LyricsGenius
     
-discord.py
+discord.py:
+
 
    Api wrapper for discord written in python. Allows the user to program discord bot/chat logs with python.
   
