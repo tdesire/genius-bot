@@ -16,12 +16,30 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+  if message.content.upper() == ('!HI'):
+    await client.send_message(message.channel, "What's up!")
+  
+  if message.content.upper() == '!HOW ARE YOU?':
+    await client.send_message(message.channel, "I'm doing as well as a script feigning machine intelligence can be. How about you?")
+
+  if message.content.upper() == '!WHAT ARE YOU?' or message.content.upper() == '!WHAT DO YOU DO?':
+    await client.send_message(message.channel, "I'm a genius bot! You want some basic music info, I'm your bot. I can search up lyrics,  " +
+    "download lyrics to your PC (if you're the host), and even give you some pretty basic info on specific songs.")
+    await client.send_message(message.channel, "I'm powered by the LyricsGenius API wrapper, which scrapes song data from the Genius website via their web api. Pretty cool tech huh?")
+    await client.send_message(message.channel, "Type !HELP for more instructions!")
+
+  if message.content.upper() == "!HELP":
+    await client.send_message(message.channel, "Here are some useful kewords: \n '!lyricsfor' [artist] - [song] *If I can find the song, I'll recite the lyrics*")
+    await client.send_message(message.channel, "'!savelyricsfor' [artist] - [song] *If I can find the song, I'll download the lyrics to your computer as a txt file (must be bot host)*")
+    await client.send_message(message.channel, "'!albumfor' [artist] - [song] *If I can find the song, I'll tell you the album it's featured on*")
+    await client.send_message(message.channel, "'!releasedatefor' [artist] - [song] *If I can find the song, I'll tell you when the song was released*")
+    await client.send_message(message.channel, "Notice the if clause. I'm not the smartest bot, so any typos or errors might screw up my search. I'm no Siri but I'm still kinda cool!")
+
   if message.content.upper().startswith('!LYRICSFOR'):
     args = message.content.lower().replace("!lyricsfor", "").split("-")
     a = args[0]
     s = args[1]
     song = api.search_song(s, a).lyrics.split("\n")
-    print(song)
     for line in song:
       if line == '':
         song.remove(line)
