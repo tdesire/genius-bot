@@ -3,11 +3,12 @@ import lyricsgenius as genius
 api = genius.Genius('I77pPvz_lAoG8k_9DJAol0bUOWQn0Xtngc1n2ytRE-J1oTeHKJfnIlPa3pZ3vTfp')
 from discord.ext import commands
 from discord.ext.commands import Bot
+import config
 
-TOKEN = 'NTA0NDI1MTQyMjA2NTk1MDcy.DrE3og.oMYL0zhxcr3X-GiA7_X9K0gBLSM'
-
+TOKEN = config.TOKEN
 Client = discord.Client()
 client = commands.Bot(command_prefix = '!genius')
+
 
 @client.event
 async def on_ready():
