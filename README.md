@@ -38,7 +38,7 @@ Keywords:
 ## Tech Stack Details
 LyricsGenius:
 
-   Backend python API wrapper that uses the Genius Web API to scrap music data from the Genius.com website.
+   Backend python API wrapper that uses the Genius Web API to scrape music data from the Genius.com website.
   
    LyricsGenius uses the following frameworks/libraries:
   
