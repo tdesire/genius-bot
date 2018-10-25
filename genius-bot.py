@@ -36,74 +36,95 @@ async def on_message(message):
     await client.send_message(message.channel, "Notice the if clause. I'm not the smartest bot, so any typos or errors might screw up my search. I'm no Siri but I'm still kinda cool!")
 
   if message.content.upper().startswith('!LYRICSFOR'):
-    args = message.content.lower().replace("!lyricsfor", "").split("-")
-    a = args[0]
-    s = args[1]
-    song = api.search_song(s, a).lyrics.split("\n")
-    for line in song:
-      if line == '':
-        song.remove(line)
+    userID = message.author.id
+    if message.content.find("-") == -1:
+      await client.send_message(message.channel, "Sorry <@%s>, the song search must follow the [artist] - [song] structure. Type *!help* for more details. " % (userID))
+    else: 
+      args = message.content.lower().replace("!lyricsfor", "").split("-")
+      a = args[0]
+      s = args[1]
+      await client.send_message(message.channel, "Searching for the lyrics to  *{}*  by  *{}* ...".format(s, a))
+      song = api.search_song(s, a)
+      if song:
+        url = song.url
+        lyrics = song.lyrics.split("\n")
+        for line in lyrics:
+          if line == '':
+            lyrics.remove(line)
+          else:
+            await client.send_message(message.channel, "*{}*".format(line))
+        await client.send_message(message.channel, "If you'd like to download the lyrics as a txt file, enter '!savelyricsfor' [artist] - [song]")
+        await client.send_message(message.channel, "Otherwise, here's a link to the annotated lyrics: \n{}".format(url))
       else:
-        await client.send_message(message.channel, "%s" % (line))
-  
+        await client.send_message(message.channel, "I was unable to find the queried song. My apologies, I'm only a genius in name. " +
+        "Check for typos and try again.")
+
   if message.content.upper().startswith('!SAVELYRICSFOR'):
-    args = message.content.lower().replace("!savelyricsfor", "").split("-")
-    a = args[0]
-    s = args[1]
-    await client.send_message(message.channel, "Downloading the lyrics for  '{}'  by  '{}'  to the bot's host computer...".format(s, a))
-    song_to_save = api.search_song(s, a)
-    song_to_save.save_lyrics(format_='txt')
+    userID = message.author.id
+    if message.content.find("-") == -1:
+      await client.send_message(message.channel, "Sorry <@%s>, the song search must follow the [artist] - [song] structure. Type *!help* for more details. " % (userID))
+    else:
+      args = message.content.lower().replace("!savelyricsfor", "").split("-")
+      a = args[0]
+      s = args[1]
+      await client.send_message(message.channel, "Searching for the lyrics to  *{}*  by  *{}* ...".format(s, a))
+      song_to_save = api.search_song(s, a)
+      if song_to_save:
+        await client.send_message(message.channel, "Downloading the lyrics for  *{}*  by  *{}*  to the bot's host computer...".format(s, a))
+        song_to_save.save_lyrics(format_='txt')
 
-    await client.send_message(message.channel, "Here is a snippet of the lyrics you've requested: ")
-    song_to_save_list = api.search_song(s, a).lyrics.split("\n")
-    snippet = song_to_save_list[1:8]
+        await client.send_message(message.channel, "Here is a snippet of the lyrics you've requested: ")
+        song_to_save_list = api.search_song(s, a).lyrics.split("\n")
+        snippet = song_to_save_list[1:8]
 
-    for line in snippet:
-      if line == '':
-        snippet.remove(line)
+        for line in snippet:
+          if line == '':
+            snippet.remove(line)
+          else:
+            await client.send_message(message.channel, "*{}*".format(line))
       else:
-        await client.send_message(message.channel, "%s" % (line))
+        await client.send_message(message.channel, "I was unable to find the queried song. My apologies, I'm only a genius in name. " +
+        "Check for typos and try again.")
 
   if message.content.upper().startswith('!ALBUMFOR'):
-    args = message.content.lower().replace('!albumfor', "").split('-')
-    a = args[0]
-    s = args[1]
-    await client.send_message(message.channel, "Finding the album for  '{}'  by  '{}' ...".format(s, a))
-    album = api.search_song(s, a).album
-    await client.send_message(message.channel, "'{}'  is featured on the album  '{}'  by  '{}'".format(s, album, a))
+    userID = message.author.id
+    if message.content.find("-") == -1:
+      await client.send_message(message.channel, "Sorry <@%s>, the song search must follow the [artist] - [song] structure. Type *!help* for more details. " % (userID))
+    else: 
+      args = message.content.lower().replace('!albumfor', "").split('-')
+      a = args[0]
+      s = args[1]
+      await client.send_message(message.channel, "Finding the album for  *{}*  by  *{}* ...".format(s, a))
+      song = api.search_song(s, a)
+      if song:
+        if song.album:
+          album = song.album
+          album_url = song.album_url
+          await client.send_message(message.channel, "*{}*  is featured on the album  *{}*  by  *{}*".format(s, album, a))
+          await client.send_message(message.channel, "Here's a link to the album on Genius: \n{}".format(album_url))
+        else: 
+          await client.send_message(message.channel, "I found the song... but I can't seem to find an associated album. Maybe it's a single?")
+      else:
+        await client.send_message(message.channel, "I was unable to find the queried song. My apologies, I'm only a genius in name. " +
+        "Check for typos and try again.")
 
   if message.content.upper().startswith('!RELEASEDATEFOR'):
-    args = message.content.lower().replace('!releasedatefor', "").split('-')
-    a = args[0]
-    s = args[1]
-    await client.send_message(message.channel, "Finding the release date for the track  '{}'  by  '{}' ...".format(s, a))
-    release_date = api.search_song(s, a).year
-    await client.send_message(message.channel, "Release date for  '{}'  by  '{}' :  '{}'".format(s, a, release_date))
-
-  # if message.content.upper().startswith('!QUIZMEON'):
-  #   score = 0
-  #   a = message.content.lower().replace('!quizmeon', "")
-  #   await client.send_message(message.channel, "Retrieving data on {} . I'm going to quiz on you on the first batch of songs I can find...".format(a))
-  #   artist = api.search_artist(a, max_songs=50)
-  #   await client.send_message(message.channel, "generating questions...")
-  #   for q in range(10):
-  #     song = artist.songs[random.randint(1,artist.num_songs)]
-  #     song_name = song.title
-  #     song_list = song.lyrics.split('\n')
-  #     vol = len(song_list)
-  #     line = song_list[random.randint(1, vol)]
-  #     await client.send_message(message.channel, "{}.  What song is this lyric from? ---\n  {}".format(q, line))
-  #     if message.content.upper() == song_name.upper():
-  #       score += 1
-  #       await client.send_message(message.channel, "Correct! You now have  '{}'  points!".format(score))
-  #     else:
-  #       await client.send_message(message.channel, "Sorry, the correct answer is  '{}' . You currently have  '{}'  points.".format(song_name, score))
-  #   if score == 10:
-  #     await client.send_message(message.channel, "Wow, you're definitely a fan! Congrats, you got a perfect score!")
-  #   elif score >= 7:
-  #     await client.send_message(message.channel, "Impressive! You sure are a  {}  stan lol".format(a))
-  #   elif score < 5:
-  #     await client.send_message(message.channel, "Hmm. You must be new to this artist. Might want to go study their catalogue")
-  #   else:
-  #     await client.send_message(message.channel, "Not bad, but you could've done better. You must be a casual fan")
+    userID = message.author.id
+    if message.content.find("-") == -1:
+      await client.send_message(message.channel, "Sorry <@%s>, the song search must follow the [artist] - [song] structure. Type *!help* for more details. " % (userID))
+    else: 
+      args = message.content.lower().replace('!releasedatefor', "").split('-')
+      a = args[0]
+      s = args[1]
+      await client.send_message(message.channel, "Finding the release date for the track  *{}*  by  *{}* ...".format(s, a))
+      song = api.search_song(s, a)
+      if song:
+        if song.year:
+          release_date = song.year
+          await client.send_message(message.channel, "Release date for  *{}*  by  *{}* :  *{}*".format(s, a, release_date))
+        else:
+          await client.send_message(message.channel, "I found the song... but I can't seem to determine the release date. I'm sorry, blame Genius xD")
+      else:
+        await client.send_message(message.channel, "I was unable to find the queried song. My apologies, I'm only a genius in name. " +
+        "Check for typos and try again.")
 client.run(TOKEN)
