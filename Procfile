@@ -1,1 +1,1 @@
-worker: genius-bot.py
+worker: python genius-bot.py
