@@ -1,4 +1,4 @@
-discord>=0.16.12
+discord==0.16.12
 lyricsgenius==0.9.5
 beautifulsoup4==4.6.0
 requests==2.18.1
