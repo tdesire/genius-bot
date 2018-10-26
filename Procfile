@@ -1,0 +1,1 @@
+worker: genius-bot.py
