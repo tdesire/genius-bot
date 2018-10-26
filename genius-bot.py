@@ -1,17 +1,17 @@
 import discord
 import os
 import lyricsgenius as genius
-import config
+# import config
 # import config_sample
 
-api = genius.Genius(os.getenv('GENIUS_TOKEN', config.GENIUS_TOKEN))
+api = genius.Genius(os.getenv('GENIUS_TOKEN'))
 #api = genius.Genius(config_sample.GENIUS_TOKEN)
 
 from discord.ext import commands
 from discord.ext.commands import Bot
 import random
 
-TOKEN = os.getenv('BOT_TOKEN', config.BOT_TOKEN)
+TOKEN = os.getenv('BOT_TOKEN')
 #TOKEN = config_sample.BOT_TOKEN
 
 Client = discord.Client()
