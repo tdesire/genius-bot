@@ -1,7 +1,6 @@
 import discord
 import os
 import lyricsgenius as genius
-# import config
 # import config_sample
 
 api = genius.Genius(os.getenv('GENIUS_TOKEN'))
