@@ -27,9 +27,9 @@ Keywords:
 *The following are instructions for using the live genius-bot on Discord*
 
 As a Discord user you have 3 means by which to access the Genius Bot:
-1. Join the genius-bot server with the following link: https://discord.gg/fQYsdgw
+1. Direct message the Genius Bot. Simply search @genius-bot (*genius-bot#9832*).
 2. Add the genius-bot to your own personal Discord server: https://discordapp.com/oauth2/authorize?client_id=504681012106625034&scope=bot&permissions=0
-3. Direct message the Genius Bot. Simply search @genius-bot (*genius-bot#9832*).
+3. Join the genius-bot server with the following link: https://discord.gg/fQYsdgw
 
 ## Setup
 *The following instructions are a brief guide for hosting your own Genius Bot*
@@ -74,4 +74,7 @@ discord.py:
   Link to discord.py GitHub repo:
 
     https://github.com/Rapptz/discord.py
+ 
+ 
+Heroku (Live Bot Script Deployment)
  
